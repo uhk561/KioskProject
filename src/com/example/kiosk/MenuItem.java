@@ -23,8 +23,11 @@ public class MenuItem { //세부 메뉴 속성을 가지는 클래스
         System.out.println(name + " | " + "W " + price + " | " + info);
     }
 
+    public String printChoicMenu() { // 게터에서 변경(맞는 코드는 아닌 거 같음)
+        return name + " | " + "W " + price + " | " + info;
+
+
     // 게터
-    public String getName() {
-        return this.name;
+
     }
 }

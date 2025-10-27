@@ -43,14 +43,13 @@ public class Main { // 시작지점이 되는 클래스
                 System.out.println("종료되었습니다.");
                 break;
             } else if (1 <= answer && answer<= menuItems.size()){   // 리스트 사이즈까지 범위 허용 (범위검사
-                System.out.println(menuItems.get(answer - 1) + "를 선택하셨습니다");
+                System.out.println(menuItems.get(answer - 1).printChoicMenu() + "를 선택하셨습니다");
                 break;
             } else {
                 System.out.println("올바른 입력이 아닙니다.");
             }
 
         }
-        System.out.println("종료되었습니다");
         sc.close();
     }
 }
