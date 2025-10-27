@@ -2,7 +2,7 @@ package com.example.kiosk;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
 
 public class Main { // 시작지점이 되는 클래스
 

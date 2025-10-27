@@ -7,7 +7,7 @@ public class Kiosk { // 프로그램 순서 및 흐름 제어 담당
 
     // 속성
     private List<MenuItem> menuItems;
-    Scanner sc  = new Scanner(System.in);
+    private Scanner sc  = new Scanner(System.in);
 
     // 생성자
     public Kiosk(List<MenuItem> menuItems) {
