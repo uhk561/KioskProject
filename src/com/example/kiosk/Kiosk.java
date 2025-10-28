@@ -40,10 +40,22 @@ public class Kiosk { // 프로그램 순서 및 흐름 제어 담당
         while (true) {
 
 
-        // 카테고리 메뉴 출력 및 입력 부분
+        // 카테고리 메뉴 출력 및 입력 부분(메인메뉴)
             System.out.println("[ SHAKESHACK MENU ]");
             for (int i = 0; i < categories.size(); i++) {
                 System.out.println(i + 1 + ". " + categories.get(i).getName());
+            }
+            if (!cartList.isEmpty()) { // 장바구니가 비어있지 않다면
+                for(int i = 0; i < cartList.size(); i++) {
+                    for(int j = 0; j < cartList.size(); j++) {
+                        if (cartList.get(i).equals(cartList.get(j))) {
+
+                        }
+                    }
+                }
+                System.out.println(" [ ORDER MENU ] ");
+                System.out.println("4. Orders");
+                System.out.println("5. Cancel");
             }
             System.out.println("0. 종료");
             System.out.println("카테고리를 알맞은 번호로 입력하세요.");
@@ -52,23 +64,48 @@ public class Kiosk { // 프로그램 순서 및 흐름 제어 담당
             if(!sc.hasNextInt()) { // 호환성 검사(숫자가 아닐시)
                 sc.next();
                 System.out.println("올바른 입력이 아닙니다.");
-                continue;
             }
                 int choiceCategory= sc.nextInt();
-            while(true) {
                 if(choiceCategory == 0) {
                     System.out.println("종료되었습니다.");
                     break;
                 } else if (1 <= choiceCategory && choiceCategory <= categories.size()){   // 리스트 사이즈까지 범위 허용 (범위검사
                     System.out.println(categories.get(choiceCategory - 1).getName() + "를(을) 선택하셨습니다");
-                    break;
+                } else if(choiceCategory == 5) { // 주문 취소시 장바구니 비움
+                    cartList.clear();
+                    System.out.println("진행중인 주문을 취소합니다");
+                    continue;
+                } else if(choiceCategory == 4) {
+                    System.out.println(" [ Orders ] ");
+                    double total = 0;
+                    for (int i = 0; i < cartList.size(); i++) {
+                        System.out.println(cartList.get(i).getPrintMenu());
+                        total += cartList.get(i).getPrice();
+                    }
+                    System.out.println(" [ Total ] ");
+                    System.out.println(String.format("W " + "%.1f",total)); // 소수점 1자리 뒤부턴 자르기
+
+                    System.out.println("1. 주문하기  "+ "2. 메뉴판으로 돌아가기");
+                    if(!sc.hasNextInt()) {
+                        sc.next();
+                        System.out.println("올바른 입력이 아닙니다.");
+                    }
+                    int orderAnswer = sc.nextInt();
+                    if(orderAnswer == 1) {
+                        System.out.println(String.format("주문이 완료되었습니다. 금액은 W " + "%.1f",total + " 입니다"));
+                        cartList.clear(); // 주문완료되었으니 다시 비움
+                        continue;
+                    } else if(orderAnswer == 2) {
+                        continue;
+                    }
                 } else {// 옵션 외 숫자 입력시
+                    sc.next();
                     System.out.println("올바른 입력이 아닙니다.");
+                    continue;
                 }
-            }
+            Menu choiceMenu = categories.get(choiceCategory - 1); // 선택된 카테고리 안의 메뉴들 가져오기
 
             // 선택한 카테고리의 메뉴 출력 후 입력받은 메뉴 출력 부분
-            Menu choiceMenu = categories.get(choiceCategory - 1); // 선택된 카테고리 안의 메뉴들 가져오기
             while (true) {
                 System.out.println("[ " + choiceMenu.getName() +  " ]");
                 List<MenuItem> items = choiceMenu.getMenuItems();
@@ -90,7 +127,7 @@ public class Kiosk { // 프로그램 순서 및 흐름 제어 담당
                 if (choiceItem == 0) {
                    break;
                 } else if (1 <= choiceItem && choiceItem <= items.size()){   // 리스트 사이즈까지 범위 허용 (범위검사
-                    MenuItem choiceOrder= items.get(choiceItem - 1); // 선택한 메뉴 가져오기 ex(A버거
+                    choiceOrder= items.get(choiceItem - 1); // 선택한 메뉴 가져오기 ex(A버거
 
                     System.out.println(choiceOrder.getPrintChoicMenu() + " \n  위 메뉴를 장바구니에 추가하시겠습니까?");
                     System.out.println("1. 확인           2. 취소");
@@ -103,19 +140,19 @@ public class Kiosk { // 프로그램 순서 및 흐름 제어 담당
                    System.out.println("올바른 입력이 아닙니다.");
                 }
                 int cartAnswer = sc.nextInt();
-
-                switch (cartAnswer) {
-                    case 1:
+                if (cartAnswer == 1) {
                     cartList.add(choiceOrder);
-                    break;
-                    case 2:
-                        break;
+                    System.out.println(choiceOrder.getName() + "을(를) 장바구니에 추가되었습니다.");
+                } else if (cartAnswer == 2) {
+                    System.out.println("취소되었습니다.");
+                } else {
+                    System.out.println("올바른 입력이 아닙니다.");
                 }
+                break;
 
             }
-            break;
         }
-
         sc.close();
+
     }
 }
