@@ -28,12 +28,14 @@ public class Kiosk { // 프로그램 순서 및 흐름 제어 담당
 
 
         // 기능
+
+        // 키오스크 시작
         public void start() {
 
         while (true) {
 
 
-        // main 함수에서 MenuItem 클래스를 활용하여 햄버거 메뉴를 출력합니다.
+        // 카테고리 메뉴 출력 및 입력 부분
             System.out.println("[ SHAKESHACK MENU ]");
             for (int i = 0; i < categories.size(); i++) {
                 System.out.println(i + 1 + ". " + categories.get(i).getName());
@@ -42,7 +44,7 @@ public class Kiosk { // 프로그램 순서 및 흐름 제어 담당
             System.out.println("카테고리를 알맞은 번호로 입력하세요.");
 
 
-            if(!sc.hasNextInt()) {
+            if(!sc.hasNextInt()) { // 호환성 검사(숫자가 아닐시)
                 sc.next();
                 System.out.println("올바른 입력이 아닙니다.");
                 continue;
@@ -53,10 +55,12 @@ public class Kiosk { // 프로그램 순서 및 흐름 제어 담당
                 break;
             } else if (1 <= choiceCategory && choiceCategory <= categories.size()){   // 리스트 사이즈까지 범위 허용 (범위검사
                 System.out.println(categories.get(choiceCategory - 1).getName() + "를(을) 선택하셨습니다");
-            } else {
+            } else {// 옵션 외 숫자 입력시
                 System.out.println("올바른 입력이 아닙니다.");
             }
 
+
+            // 선택한 카테고리의 메뉴 출력 후 입력받은 메뉴 출력 부분
             Menu choiceMenu = categories.get(choiceCategory - 1); // 선택된 카테고리 안의 메뉴들 가져오기
             while (true) {
                 System.out.println("[ " + choiceMenu.getName() +  " ]");
@@ -65,7 +69,6 @@ public class Kiosk { // 프로그램 순서 및 흐름 제어 담당
                 for (int i = 0; i < items.size(); i++) {
                     System.out.print(i + 1 + ". ");
                     items.get(i).printMenu();
-
                 }
 
                 System.out.println("0. 뒤로가기");
