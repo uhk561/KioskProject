@@ -14,4 +14,19 @@ public class Cart {
         this.quantity = quantity;
     }
 
+
+    public MenuItem getMenuItem() {
+        return menuItem;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+
+    public  void addCountQuantity(int count) {
+        this.quantity += count;
+    }
+
 }
+

@@ -24,7 +24,7 @@ public class Kiosk { // 프로그램 순서 및 흐름 제어 담당
         private List<Menu> categories;
         private Scanner sc  = new Scanner(System.in);
         MenuItem choiceOrder;
-        List<MenuItem> cartList = new ArrayList<MenuItem>();
+        List<Cart> cartList = new ArrayList<>();
 
         // 생성자
         public Kiosk(List<Menu> categories) {
@@ -46,13 +46,6 @@ public class Kiosk { // 프로그램 순서 및 흐름 제어 담당
                 System.out.println(i + 1 + ". " + categories.get(i).getName());
             }
             if (!cartList.isEmpty()) { // 장바구니가 비어있지 않다면
-                for(int i = 0; i < cartList.size(); i++) {
-                    for(int j = 0; j < cartList.size(); j++) {
-                        if (cartList.get(i).equals(cartList.get(j))) {
-
-                        }
-                    }
-                }
                 System.out.println(" [ ORDER MENU ] ");
                 System.out.println("4. Orders");
                 System.out.println("5. Cancel");
@@ -79,8 +72,8 @@ public class Kiosk { // 프로그램 순서 및 흐름 제어 담당
                     System.out.println(" [ Orders ] ");
                     double total = 0;
                     for (int i = 0; i < cartList.size(); i++) {
-                        System.out.println(cartList.get(i).getPrintMenu());
-                        total += cartList.get(i).getPrice();
+                        System.out.println(cartList.get(i));
+                        total += cartList.get(i).getMenuItem().getPrice();
                     }
                     System.out.println(" [ Total ] ");
                     System.out.println(String.format("W " + "%.1f",total)); // 소수점 1자리 뒤부턴 자르기
@@ -140,9 +133,20 @@ public class Kiosk { // 프로그램 순서 및 흐름 제어 담당
                    System.out.println("올바른 입력이 아닙니다.");
                 }
                 int cartAnswer = sc.nextInt();
+                boolean isCart = false;
                 if (cartAnswer == 1) {
-                    cartList.add(choiceOrder);
-                    System.out.println(choiceOrder.getName() + "을(를) 장바구니에 추가되었습니다.");
+                    for (int i = 0; i < cartList.size(); i++) {
+                        if(cartList.get(i).getMenuItem().equals(choiceOrder)) { // 선택한 메뉴가 이미 장바구니에 존재한다면
+                            cartList.get(i).addCountQuantity(1); // 수량만 변경함
+                            System.out.println("수량이 추가되었습니다.");
+                            isCart = true;
+                            break;
+                        }
+                    }
+                    if (!isCart) {
+                        cartList.add(new Cart(choiceOrder, 1));
+                        System.out.println(choiceOrder.getName() + "을(를) 장바구니에 추가되었습니다.");
+                    }
                 } else if (cartAnswer == 2) {
                     System.out.println("취소되었습니다.");
                 } else {
