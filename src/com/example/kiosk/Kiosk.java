@@ -71,12 +71,16 @@ public class Kiosk { // 프로그램 순서 및 흐름 제어 담당
                 } else if(choiceCategory == 4) {
                     System.out.println(" [ Orders ] ");
                     double total = 0;
+                    double itemTotal = 0;
                     for (int i = 0; i < cartList.size(); i++) {
-                        System.out.println(cartList.get(i));
-                        total += cartList.get(i).getMenuItem().getPrice();
+                        System.out.print(cartList.get(i).getMenuItem().getName() + " | ");
+                        System.out.print("W " + cartList.get(i).getMenuItem().getPrice() + " | ");
+                        System.out.print(cartList.get(i).getMenuItem().getInfo());
+                        System.out.println("    담은 수량 : " + cartList.get(i).getQuantity());
+                        itemTotal += cartList.get(i).getMenuItem().getPrice() * cartList.get(i).getQuantity();
                     }
                     System.out.println(" [ Total ] ");
-                    System.out.println(String.format("W " + "%.1f",total)); // 소수점 1자리 뒤부턴 자르기
+                    System.out.println(String.format("W " + "%.1f",itemTotal)); // 소수점 1자리 뒤부턴 자르기
 
                     System.out.println("1. 주문하기  "+ "2. 메뉴판으로 돌아가기");
                     if(!sc.hasNextInt()) {
@@ -85,7 +89,7 @@ public class Kiosk { // 프로그램 순서 및 흐름 제어 담당
                     }
                     int orderAnswer = sc.nextInt();
                     if(orderAnswer == 1) {
-                        System.out.println(String.format("주문이 완료되었습니다. 금액은 W " + "%.1f",total + " 입니다"));
+                        System.out.println(String.format("주문이 완료되었습니다. 금액은 W " + "%.1f",itemTotal) + " 입니다");
                         cartList.clear(); // 주문완료되었으니 다시 비움
                         continue;
                     } else if(orderAnswer == 2) {
